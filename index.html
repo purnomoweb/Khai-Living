@@ -55,7 +55,7 @@
 </head>
 <body class="font-sans bg-brandLight text-brandDark antialiased overflow-x-hidden">
 
-    <nav class="bg-brandLight/90 backdrop-blur-md fixed top-0 w-full z-40 border-b border-brandDark/5 transition-all duration-300" id="main-nav">
+    <nav class="bg-brandLight backdrop-blur-md fixed top-0 w-full z-40 border-b border-brandDark/5 transition-all duration-300" id="main-nav">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-[80px] md:h-[100px] items-center">
                 
@@ -293,54 +293,103 @@
     </section>
 
     <section id="paket-sewa" class="py-16 md:py-24 bg-surface px-4 scroll-mt-14 md:scroll-mt-20 border-t border-brandDark/5">
-        <div class="max-w-6xl mx-auto">
-            <div class="text-center mb-10 md:mb-16 fade-in">
+        <div class="max-w-6xl mx-auto text-center">
+            <div class="mb-10 md:mb-12 fade-in">
                 <p class="text-[8px] md:text-[10px] tracking-[0.3em] text-accentGold uppercase font-sans font-bold mb-3 md:mb-4">
                     PAKET
                 </p>
                 <h2 class="text-lg md:text-4xl lg:text-5xl font-serif font-bold text-brandDark mb-4 md:mb-6">Pilihan Paket Sewa</h2>
-                <div class="h-[2px] w-10 md:w-16 bg-gradient-to-r from-transparent via-accentGold/50 to-transparent mx-auto"></div>
+                <div class="h-[2px] w-10 md:w-16 bg-gradient-to-r from-transparent via-accentGold/50 to-transparent mx-auto mb-10"></div>
+                
+                <div class="inline-flex p-1 bg-white rounded-full shadow-sm border border-brandDark/5 font-sans mb-4">
+                    <button onclick="updatePrices(1)" id="btn-1" class="duration-btn px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[10px] md:text-xs font-bold transition-all duration-300 bg-accentGold text-white">1 Bulan</button>
+                    <button onclick="updatePrices(3)" id="btn-3" class="duration-btn px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[10px] md:text-xs font-bold transition-all duration-300 text-gray-400 hover:text-brandDark">3 Bulan</button>
+                    <button onclick="updatePrices(6)" id="btn-6" class="duration-btn px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[10px] md:text-xs font-bold transition-all duration-300 text-gray-400 hover:text-brandDark">6 Bulan</button>
+                    <button onclick="updatePrices(12)" id="btn-12" class="duration-btn px-4 py-1.5 md:px-6 md:py-2 rounded-full text-[10px] md:text-xs font-bold transition-all duration-300 text-gray-400 hover:text-brandDark">12 Bulan</button>
+                </div>
+                <p class="text-[9px] md:text-[11px] text-brandDark font-sans italic animate-pulse" id="discount-note">*Pilih durasi lebih lama untuk harga lebih hemat</p>
             </div>
             
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 md:gap-6 items-center fade-in">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-5 md:gap-8 items-start fade-in max-w-4xl mx-auto text-left mb-10 md:mb-12">
                 
                 <div class="bg-white rounded-2xl md:rounded-[32px] p-5 md:p-8 shadow-sm border border-gray-100 card-hover flex flex-col h-full">
-                    <div class="text-center mb-4 md:mb-6">
-                        <h3 class="font-serif text-sm md:text-xl font-bold text-brandDark mb-1 md:mb-2">Regular Single</h3>
-                        <p class="text-[8px] md:text-[10px] font-sans text-gray-400 mb-4 md:mb-6">Khai Living Syariah</p>
-                        <h4 class="font-serif text-lg md:text-4xl font-bold text-accentGold mb-4 md:mb-6">1.4 JT<span class="text-[8px] md:text-[10px] font-sans font-normal text-gray-400"> /bulan</span></h4>
-                        <div class="border-b border-gray-100 w-full"></div>
+                    <div class="text-center mb-6 md:mb-8">
+                        <h3 class="font-serif text-lg md:text-xl font-bold text-brandDark mb-1 md:mb-2">Regular Single</h3>
+                        <p class="text-[8px] md:text-[10px] font-sans text-gray-400 mb-4 md:mb-6 uppercase tracking-widest">Khai Living Syariah</p>
+                        <h4 class="font-serif text-lg md:text-4xl font-bold text-accentGold mb-2">
+                            <span id="price-regular">1.4</span> JT<span class="text-[8px] md:text-[10px] font-sans font-normal text-gray-400" id="label-regular"> /bln</span>
+                        </h4>
+                        <div id="hemat-regular" class="hidden text-[9px] md:text-[11px] font-bold text-white bg-accentGold inline-block px-3 py-1 rounded-full mb-4 md:mb-6"></div>
+                        <div class="border-b border-gray-100 w-full mt-4 md:mt-6"></div>
                     </div>
-                    <ul class="space-y-2 md:space-y-4 mb-6 md:mb-8 flex-1 font-sans px-1">
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Kamar pribadi kasur premium</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">AC & Smart TV</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Wifi unlimited</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Laundry gratis 2x/minggu</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Akses area bersama</span></li>
-                    </ul>
-                    <a href="#pesan" class="block w-full py-2.5 md:py-3.5 rounded-full text-center font-sans font-semibold text-[10px] md:text-xs bg-surface text-accentGold hover:brightness-95 transition">Pilih Paket</a>
+                    
+                    <div class="flex-1 font-sans px-1 text-[10px] md:text-xs text-gray-500 mb-6 md:mb-8">
+                        <ul class="space-y-3 md:space-y-4">
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Dipan & Kasur</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Smart TV</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Spring Bed</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Lemari</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Meja & Kursi Kerja</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Kamar Mandi Dalam</li>
+                        </ul>
+                    </div>
+
+                    <a href="https://wa.me/6280000000000" target="_blank" class="block w-full py-2.5 md:py-3.5 rounded-full text-center font-sans font-semibold text-[10px] md:text-xs bg-brandLight text-accentGold hover:brightness-95 transition border border-accentGold/20 mt-auto">Pilih Paket</a>
                 </div>
 
                 <div class="bg-white rounded-2xl md:rounded-[32px] p-5 md:p-8 shadow-xl border-2 border-accentGold card-hover flex flex-col h-full relative transform sm:-translate-y-4 z-10">
-                    <div class="absolute top-0 right-3 md:right-6 bg-accentGold text-white text-[7px] md:text-[9px] font-sans font-bold uppercase tracking-wider px-2 md:px-3 py-1 md:py-1.5 rounded-b-md md:rounded-b-lg">
-                        Populer
+                    <div class="absolute top-0 right-3 md:right-6 bg-accentGold text-white text-[7px] md:text-[9px] font-sans font-bold uppercase tracking-wider px-2 md:px-3 py-1 md:py-1.5 rounded-b-md md:rounded-b-lg">Populer</div>
+                    <div class="text-center mb-6 md:mb-8 mt-2">
+                        <h3 class="font-serif text-lg md:text-xl font-bold text-brandDark mb-1 md:mb-2">Premium Single</h3>
+                        <p class="text-[8px] md:text-[10px] font-sans text-gray-400 mb-4 md:mb-6 uppercase tracking-widest">Khai Living Syariah</p>
+                        <h4 class="font-serif text-lg md:text-4xl font-bold text-accentGold mb-2">
+                            <span id="price-premium">1.8</span> JT<span class="text-[8px] md:text-[10px] font-sans font-normal text-gray-400" id="label-premium"> /bln</span>
+                        </h4>
+                        <div id="hemat-premium" class="hidden text-[9px] md:text-[11px] font-bold text-accentGold bg-surface inline-block px-3 py-1 rounded-full mb-4 md:mb-6"></div>
+                        <div class="border-b border-gray-100 w-full mt-4 md:mt-6"></div>
                     </div>
-                    <div class="text-center mb-4 md:mb-6 mt-2">
-                        <h3 class="font-serif text-sm md:text-xl font-bold text-brandDark mb-1 md:mb-2">Premium Single</h3>
-                        <p class="text-[8px] md:text-[10px] font-sans text-gray-400 mb-4 md:mb-6">Khai Living Syariah</p>
-                        <h4 class="font-serif text-lg md:text-4xl font-bold text-accentGold mb-4 md:mb-6">1.8 JT<span class="text-[8px] md:text-[10px] font-sans font-normal text-gray-400"> /bulan</span></h4>
-                        <div class="border-b border-gray-100 w-full"></div>
+                    
+                    <div class="flex-1 font-sans px-1 text-[10px] md:text-xs text-gray-500 mb-6 md:mb-8">
+                        <ul class="space-y-3 md:space-y-4">
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Dipan & Kasur</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>AC & Smart TV</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Spring Bed</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Lemari</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Meja & Kursi Kerja</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Kamar Mandi Dalam</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Water Heater</li>
+                            <li class="flex items-start"><i data-lucide="check" class="w-3.5 h-3.5 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i>Smart Lock Door</li>
+                        </ul>
                     </div>
-                    <ul class="space-y-2 md:space-y-4 mb-6 md:mb-8 flex-1 font-sans px-1">
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Kamar luas kasur super premium</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">AC dual + Smart TV besar</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Wifi unlimited prioritas</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Laundry gratis unlimited</span></li>
-                        <li class="flex items-start"><i data-lucide="check" class="w-3 h-3 md:w-4 md:h-4 text-accentGold mr-2 mt-0.5 flex-shrink-0"></i><span class="text-[10px] md:text-xs text-gray-500 leading-relaxed">Akses VIP semua fasilitas</span></li>
-                    </ul>
-                    <a href="#pesan" class="block w-full py-2.5 md:py-3.5 rounded-full text-center font-sans font-semibold text-[10px] md:text-xs bg-accentGold text-white hover:opacity-90 transition shadow-md">Pilih Paket</a>
+
+                    <a href="https://wa.me/6280000000000" target="_blank" class="block w-full py-2.5 md:py-3.5 rounded-full text-center font-sans font-semibold text-[10px] md:text-xs bg-accentGold text-white hover:opacity-90 transition shadow-md mt-auto">Pilih Paket</a>
                 </div>
             </div>
+
+           <div class="max-w-4xl mx-auto fade-in">
+                <div class="bg-white rounded-2xl md:rounded-[32px] p-6 md:p-8 shadow-sm border border-brandDark/5 text-left flex flex-col md:flex-row items-center md:items-start justify-center gap-8 md:gap-16">
+                    <div class="w-full md:w-auto md:max-w-xs text-center md:text-left">
+                        <div class="w-10 h-10 md:w-12 md:h-12 bg-surface rounded-full flex items-center justify-center mb-3 mx-auto md:mx-0 shadow-sm">
+                            <i data-lucide="map" class="w-4 h-4 md:w-5 md:h-5 text-accentGold"></i>
+                        </div>
+                        <h4 class="font-serif text-lg md:text-xl font-bold text-brandDark mb-2 md:mb-3">Lokasi Strategis</h4>
+                        <p class="text-[11px] md:text-sm text-gray-500 font-sans leading-relaxed">Berada di pusat aktivitas dengan akses mudah ke berbagai fasilitas umum di Bandung.</p>
+                    </div>
+                    
+                    <div class="w-full md:w-auto flex flex-col items-start font-sans px-2 md:px-0 md:pl-16 md:border-l border-brandDark/10">
+                        <ul class="space-y-4 text-[10px] md:text-xs text-gray-600">
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Universitas Islam Nusantara (2.2 km)</li>
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Kiara Artha Park (6.7 km)</li>
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Masjid Raya Al-Jabbar (7.6 km)</li>
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Warteg Siip (1.8 km)</li>
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Alfamart Kiara Condong (2.6 km)</li>
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Masjid Al-Barokah (1.8 km)</li>
+                            <li class="flex items-center"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-accentGold mr-2.5 flex-shrink-0"></i>Bank BNI (877 m)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
         </div>
     </section>
 
@@ -358,8 +407,8 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6 fade-in">
                 <div class="bg-white rounded-2xl md:rounded-3xl p-6 md:p-10 text-center shadow-sm border border-gray-100 card-hover flex flex-col h-full">
-                    <div class="w-10 h-10 md:w-14 md:h-14 bg-surface rounded-full mx-auto flex items-center justify-center mb-4 md:mb-6">
-                        <i data-lucide="home" class="w-4 h-4 md:w-6 md:h-6 text-accentGold"></i>
+                    <div class="w-10 h-10 md:w-14 md:h-14 bg-surface rounded-full mx-auto flex items-center justify-center mb-4 md:mb-6 p-2 md:p-2.5">
+                        <img src="Assets/logo-mamikos.png" alt="Logo Mami Kos" class="h-full w-auto object-contain">
                     </div>
                     <h3 class="font-serif text-base md:text-2xl font-bold text-brandDark mb-2 md:mb-4">Pesan via Mami Kos</h3>
                     <p class="text-[11px] md:text-xs text-gray-500 font-sans leading-relaxed mb-6 md:mb-8 flex-1">Temukan listing kami di aplikasi Mami Kos untuk proses pemesanan yang mudah dan terpercaya.</p>
@@ -377,7 +426,7 @@
                     <h3 class="font-serif text-base md:text-2xl font-bold text-brandDark mb-2 md:mb-4">Pesan via WhatsApp</h3>
                     <p class="text-[11px] md:text-xs text-gray-500 font-sans leading-relaxed mb-6 md:mb-8 flex-1">Hubungi kami langsung via WhatsApp untuk tanya jawab dan reservasi kamar.</p>
                     
-                    <a href="https://wa.me/6281111199706" target="_blank" class="block w-full py-3 md:py-4 rounded-full text-center bg-accentGold text-white font-sans font-medium text-[10px] md:text-sm transition hover:opacity-90 shadow-md">
+                    <a href="https://wa.me/6281111199706" target="_blank" class="block w-full py-3 md:py-4 rounded-full text-center bg-accentGold text-white font-sans font-bold text-[10px] md:text-sm transition hover:opacity-90 shadow-md">
                         Chat WhatsApp Sekarang
                     </a>
                 </div>
@@ -505,7 +554,7 @@
                             <i class="fa-solid fa-star text-accentGold text-[9px] md:text-[11px]"></i>
                             <i class="fa-solid fa-star text-accentGold text-[9px] md:text-[11px]"></i>
                         </div>
-                        <p class="text-[11px] md:text-sm text-gray-500 italic mb-6 md:mb-8 leading-relaxed flex-1 font-lora">"Lingkungannya bersih dan terawat. Mengambil kamar premium sangat *worth it* karena ruangannya luas dan fasilitas kamar mandinya sangat memadai."</p>
+                        <p class="text-[11px] md:text-sm text-gray-500 italic mb-6 md:mb-8 leading-relaxed flex-1 font-lora">"Lingkungannya bersih dan terawat. Mengambil kamar premium sangat worth it karena ruangannya luas dan fasilitas kamar mandinya sangat memadai."</p>
                         <div class="w-full pt-4 md:pt-6 border-t border-gray-50 mt-auto">
                             <h3 class="font-serif font-bold text-brandDark text-sm md:text-lg">Fatimah Zahra</h3>
                             <p class="text-[8px] md:text-[10px] font-sans text-gray-400 mt-1 md:mt-1.5 uppercase tracking-widest">Pekerja Swasta</p>
@@ -600,7 +649,7 @@
                         </div>
                         <div>
                             <h4 class="font-bold text-gray-400 text-[8px] md:text-[10px] uppercase tracking-widest mb-0.5 md:mb-1">Alamat</h4>
-                            <p class="text-[11px] md:text-sm font-semibold text-brandDark leading-relaxed">Jalan Cijawura Hilir II, Buah Batu, Bandung</p>
+                            <p class="text-[11px] md:text-sm font-semibold text-brandDark leading-relaxed">Jl. Cijawura Hilir II No.108 ( <em>Sebelah Laundry Hari Ini</em> ), Cijaura, Kec. Buahbatu, Kota Bandung, Jawa Barat 40287</p>
                         </div>
                     </div>
 
@@ -637,7 +686,13 @@
         </div>
     </footer>
 
-    <script src="JS/script.js"></script>
-
+    <div id="lightbox" class="fixed inset-0 z-[100] hidden bg-black/90 backdrop-blur-sm flex justify-center items-center opacity-0 transition-opacity duration-300">
+        <button onclick="closeLightbox()" class="absolute top-4 right-4 md:top-8 md:right-8 text-white/70 hover:text-accentGold transition p-2 z-50">
+            <i data-lucide="x" class="w-8 h-8 md:w-10 md:h-10"></i>
+        </button>
+        
+        <img id="lightbox-img" src="" alt="Detail Gambar" class="max-w-[95%] max-h-[90vh] object-contain rounded-xl shadow-2xl transform scale-95 transition-transform duration-300">
+    </div>
+    <script src="JS/script.js" defer></script>
 </body>
 </html>

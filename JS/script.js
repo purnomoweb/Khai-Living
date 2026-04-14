@@ -2,22 +2,32 @@
 lucide.createIcons();
 
 /* =========================================
-   DATABASE GALERI (Bisa banyak gambar per kategori)
+   DATABASE GALERI
 ========================================= */
 const galleryData = [
     {
         title: "Kamar Tidur",
         images: [
             "Assets/Galeri/kamar-tidur-1.jpg",
-            "Assets/Galeri/kamar-tidur-2.jpg"
+            "Assets/Galeri/kamar-tidur-2.jpg",
+            "Assets/Galeri/kamar-tidur-3.jpg"
         ],
-        isWide: true
+        isWide: false
     },
     {
         title: "Area Depan",
         images: [
             "Assets/Galeri/area-depan-1.jpg",
             "Assets/Galeri/area-depan-2.jpg"
+        ],
+        isWide: false
+    },
+    {
+        title: "Rooftop",
+        images: [
+            "Assets/Galeri/rooftop-1.jpg",
+            "Assets/Galeri/rooftop-2.jpg",
+            "Assets/Galeri/rooftop-3.jpg"
         ],
         isWide: false
     },
@@ -36,7 +46,7 @@ const galleryData = [
         isWide: false
     },
     {
-        title: "Tampak Luar Bangunan",
+        title: "Luar Bangunan",
         images: [
             "Assets/Galeri/luar-bangunan-1.jpg",
             "Assets/Galeri/luar-bangunan-2.jpg"
@@ -59,17 +69,24 @@ function renderGallery() {
         
         let imagesHtml = '';
         item.images.forEach(imgSrc => {
+            // PERUBAHAN: Menambahkan cursor-pointer dan onclick="openLightbox(...)"
             imagesHtml += `
-                <div class="w-full h-full flex-shrink-0 snap-center relative group">
+                <div class="w-full h-full flex-shrink-0 snap-center relative group cursor-pointer" onclick="openLightbox('${imgSrc}')">
                     <img src="${imgSrc}" alt="${item.title}" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105">
-                    <div class="absolute inset-0 bg-brandDark/20 group-hover:bg-brandDark/0 transition duration-500 pointer-events-none"></div>
+                    <div class="absolute inset-0 bg-brandDark/20 group-hover:bg-black/40 transition duration-500 pointer-events-none"></div>
+                    
+                    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
+                        <div class="bg-white/20 backdrop-blur-sm p-3 rounded-full">
+                            <i data-lucide="zoom-in" class="w-6 h-6 text-white"></i>
+                        </div>
+                    </div>
                 </div>
             `;
         });
 
         let dotsHtml = '';
         if (item.images.length > 1) {
-            dotsHtml = `<div class="absolute bottom-2.5 md:bottom-3.5 right-2.5 md:right-3.5 flex space-x-1.5 z-20">`;
+            dotsHtml = `<div class="absolute bottom-2.5 md:bottom-3.5 right-2.5 md:right-3.5 flex space-x-1.5 z-20 pointer-events-none">`;
             item.images.forEach((_, i) => {
                 const activeClass = i === 0 ? 'bg-accentGold w-3' : 'bg-white/70 w-1.5';
                 dotsHtml += `<div class="h-1.5 rounded-full transition-all duration-300 ${activeClass} dot-indicator-${index}" data-index="${i}"></div>`;
@@ -118,35 +135,32 @@ function renderGallery() {
             });
         });
     });
+
+    // Panggil ulang Lucide icons agar ikon zoom yang baru ditambahkan bisa ter-render
+    lucide.createIcons();
 }
 
-// Panggil fungsi renderGaleri
 renderGallery();
 
 /* =========================================
-   AUTO-SCROLL GALERI (Fungsi Baru)
+   AUTO-SCROLL GALERI 
 ========================================= */
 function autoScrollGallery() {
     const galleryContainers = document.querySelectorAll('.gallery-scroll-container');
     galleryContainers.forEach(container => {
-        // Hanya jalankan fungsi geser JIKA gambar di dalam kotak lebih dari 1
         if (container.scrollWidth > container.clientWidth + 10) {
             const cardWidth = container.clientWidth;
             
-            // Jika sudah mentok di kanan (gambar terakhir), kembali ke awal (gambar pertama)
             if (container.scrollLeft + container.clientWidth >= container.scrollWidth - 10) {
                 container.scrollTo({ left: 0, behavior: 'smooth' });
             } else {
-                // Geser ke gambar selanjutnya
                 container.scrollBy({ left: cardWidth, behavior: 'smooth' });
             }
         }
     });
 }
 
-// Atur jeda waktu geser otomatis (3000 = 3 detik)
 setInterval(autoScrollGallery, 3000);
-
 
 /* =========================================
    MENU MOBILE
@@ -262,3 +276,129 @@ const observer = new IntersectionObserver((entries) => {
 }, { threshold: 0.1 });
 
 document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+
+/* =========================================
+   LIGHTBOX (FITUR KLIK GAMBAR)
+========================================= */
+function openLightbox(src) {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    if (!lightbox || !lightboxImg) return; // Mencegah error jika HTML-nya belum ada
+    
+    lightboxImg.src = src;
+    lightbox.classList.remove('hidden');
+    
+    // Jeda kecil agar animasi transisi bekerja
+    setTimeout(() => {
+        lightbox.classList.remove('opacity-0');
+        lightboxImg.classList.remove('scale-95');
+        lightboxImg.classList.add('scale-100');
+    }, 10);
+    
+    // Kunci scroll halaman web saat gambar terbuka
+    document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightbox-img');
+    if (!lightbox || !lightboxImg) return;
+    
+    lightbox.classList.add('opacity-0');
+    lightboxImg.classList.remove('scale-100');
+    lightboxImg.classList.add('scale-95');
+    
+    // Tunggu animasi CSS selesai baru disembunyikan
+    setTimeout(() => {
+        lightbox.classList.add('hidden');
+        lightboxImg.src = '';
+        document.body.style.overflow = ''; // Kembalikan scroll web
+    }, 300);
+}
+
+// Event listener: Tutup gambar jika area latar gelap diklik
+document.addEventListener('DOMContentLoaded', () => {
+    const lightbox = document.getElementById('lightbox');
+    if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    }
+});
+
+/* =========================================
+   LOGIKA HARGA PAKET (Switching Durasi)
+========================================= */
+const pricingData = {
+    1: {
+        regular: "1.4",
+        premium: "1.8",
+        label: " /bln",
+        hematText: ""
+    },
+    3: {
+        regular: "3.7", // (1.4 * 3) - 0.5
+        premium: "4.9", // (1.8 * 3) - 0.5
+        label: " /3 bln",
+        hematText: "Lebih Hemat Rp 500.000"
+    },
+    6: {
+        regular: "6.4", // (1.4 * 6) - 2.0
+        premium: "8.8", // (1.8 * 6) - 2.0
+        label: " /6 bln",
+        hematText: "Lebih Hemat Rp 2.000.000"
+    },
+    12: {
+        regular: "10.8", // (1.4 * 12) - 6.0
+        premium: "15.6", // (1.8 * 12) - 6.0
+        label: " /12 bln",
+        hematText: "Lebih Hemat Rp 6.000.000"
+    }
+};
+
+function updatePrices(months) {
+    const data = pricingData[months];
+    
+    // Ambil elemen HTML
+    const regPriceEl = document.getElementById('price-regular');
+    const premPriceEl = document.getElementById('price-premium');
+    const regLabelEl = document.getElementById('label-regular');
+    const premLabelEl = document.getElementById('label-premium');
+    const regHematEl = document.getElementById('hemat-regular');
+    const premHematEl = document.getElementById('hemat-premium');
+
+    if (regPriceEl && premPriceEl) {
+        // Update Angka dan Label Durasi
+        regPriceEl.innerText = data.regular;
+        premPriceEl.innerText = data.premium;
+        regLabelEl.innerText = data.label;
+        premLabelEl.innerText = data.label;
+
+        // Munculkan/Sembunyikan Badge Hemat
+        if (data.hematText !== "") {
+            regHematEl.innerText = data.hematText;
+            premHematEl.innerText = data.hematText;
+            regHematEl.classList.remove('hidden');
+            premHematEl.classList.remove('hidden');
+        } else {
+            regHematEl.classList.add('hidden');
+            premHematEl.classList.add('hidden');
+        }
+    }
+
+    // Update Status Warna Tombol (Aktif/Tidak)
+    const allButtons = document.querySelectorAll('.duration-btn');
+    allButtons.forEach(btn => {
+        btn.classList.remove('bg-accentGold', 'text-white');
+        btn.classList.add('text-gray-400');
+    });
+
+    const activeBtn = document.getElementById(`btn-${months}`);
+    if (activeBtn) {
+        activeBtn.classList.remove('text-gray-400');
+        activeBtn.classList.add('bg-accentGold', 'text-white');
+    }
+}
