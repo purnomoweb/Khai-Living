@@ -336,25 +336,25 @@ const pricingData = {
     1: {
         regular: "1.4",
         premium: "1.8",
-        label: " /bln",
+        label: " /bulan",
         hematText: ""
     },
     3: {
         regular: "3.7", // (1.4 * 3) - 0.5
         premium: "4.9", // (1.8 * 3) - 0.5
-        label: " /3 bln",
+        label: " /3 bulan",
         hematText: "Lebih Hemat Rp 500.000"
     },
     6: {
         regular: "6.4", // (1.4 * 6) - 2.0
         premium: "8.8", // (1.8 * 6) - 2.0
-        label: " /6 bln",
+        label: " /6 bulan",
         hematText: "Lebih Hemat Rp 2.000.000"
     },
     12: {
         regular: "10.8", // (1.4 * 12) - 6.0
         premium: "15.6", // (1.8 * 12) - 6.0
-        label: " /12 bln",
+        label: " /12 bulan",
         hematText: "Lebih Hemat Rp 6.000.000"
     }
 };
